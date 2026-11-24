@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F4F5FA">
+  <meta name="description" content="Hábitos, tareas y agenda de la uni en una sola app.">
+
+  <!-- Para que en el móvil se comporte como una app -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Mi Día">
+
+  <title>Mi Día</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Aplica el tema antes de pintar para evitar un "parpadeo" blanco en modo oscuro -->
+  <script>
+    (function () {
+      try {
+        var s = JSON.parse(localStorage.getItem('miDia.settings') || '{}');
+        var dark = s.theme === 'dark' || ((!s.theme || s.theme === 'auto') && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        if (s.accent) document.documentElement.style.setProperty('--accent', s.accent);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="header-text">
+        <p id="subtitle"></p>
+        <h1 id="title">Mi Día</h1>
+      </div>
+      <button id="settings-btn" class="icon-btn" aria-label="Ajustes"></button>
+    </header>
+
+    <main id="view"></main>
+  </div>
+
+  <button id="fab" class="fab" aria-label="Añadir" hidden></button>
+
+  <nav class="tabbar" aria-label="Secciones">
+    <button class="tab" data-tab="habits"><span class="tab-icon" data-icon="habits"></span><span>Hábitos</span></button>
+    <button class="tab" data-tab="tasks"><span class="tab-icon" data-icon="tasks"></span><span>Tareas</span></button>
+    <button class="tab" data-tab="agenda"><span class="tab-icon" data-icon="calendar"></span><span>Agenda</span></button>
+  </nav>
+
+  <div id="sheet-root"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/google.js"></script>
+  <script src="js/habits.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/agenda.js"></script>
+  <script src="js/settings.js"></script>
+  <script>App.init();</script>
+</body>
+</html>

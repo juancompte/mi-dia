@@ -1,0 +1,9 @@
+# Configuración local de Claude Code (no hace falta publicarla)
+.claude/
+
+# Copias de seguridad exportadas desde la app (contienen tus datos)
+mi-dia-copia-*.json
+
+# Sistema
+Thumbs.db
+.DS_Store
